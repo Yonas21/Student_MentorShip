@@ -3,12 +3,23 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 
 let app = express();
 
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.DB, { useNewUrlParser: true }).then(
+    () => {
+      console.log("Database is connected");
+    },
+    err => {
+      console.log("Can not connect to the database" + err);
+    }
+);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
