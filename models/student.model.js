@@ -24,7 +24,7 @@ const studentSchema = mongoose.Schema({
     supervisor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'SuperVisor',
-        required: true
+        required: false
     }
 },
     {
