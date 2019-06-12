@@ -28,11 +28,6 @@ const teacherSchema = mongoose.Schema({
         interest: {
             type: String,
             required: true
-        },
-        report: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Report',
-            required: true
         }
 },{
     collection: 'teacher'

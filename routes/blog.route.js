@@ -11,6 +11,6 @@ router.get('/:blogId', blogController.get_a_blog);
 //register a student
 router.post('/', blogController.create_a_blog);
 
-router.delete(':blogId', blogController.delete_a_blog);
+router.delete('/:blogId', blogController.delete_a_blog);
 
 module.exports = router;

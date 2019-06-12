@@ -13,7 +13,7 @@ const studentSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    id: {
+    username: {
         type: String,
         default:'STU-0000'
     },

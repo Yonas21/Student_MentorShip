@@ -3,6 +3,7 @@ const Blog = require('../models/blog.model');
 
 exports.get_all_blogs = (req, res, next) => {
     Blog.find()
+        .select("blog date")
         .exec()
         .then(blogs => {
             res.status(200).json({
@@ -21,6 +22,7 @@ exports.get_all_blogs = (req, res, next) => {
 exports.get_a_blog = (req, res, next) => {
     let id = req.params.blogId;
     Blog.findById(id)
+        .select("blog date")
         .exec()
         .then(blog => {
             res.status(200).json({
@@ -58,7 +60,7 @@ exports.create_a_blog = (req, res, next) => {
 
 exports.delete_a_blog = (req, res, next) => {
     let id = req.params.blogId;
-
+    console.log(id);
     Blog.findByIdAndRemove(id)
         .exec()
         .then(result => {

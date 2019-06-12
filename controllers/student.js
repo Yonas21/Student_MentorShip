@@ -3,6 +3,7 @@ const Student = require('../models/student.model');
 
 exports.get_all_students = (req, res, next) => {
     Student.find()
+        .select("username password firstName lastName school")
         .exec()
         .then(students => {
             res.status(200).json({
@@ -20,6 +21,7 @@ exports.get_all_students = (req, res, next) => {
 exports.get_a_student = (req, res, next) => {
     let id = req.params.studentId;
     Student.findById(id)
+        .select("username password firstName lastName school")
         .exec()
         .then(student => {
             res.status(200).json({
@@ -36,9 +38,8 @@ exports.get_a_student = (req, res, next) => {
 };
 
 exports.register_student = (req, res, next) => {
-    let username = 'STU-' + Math.floor(Math.random() * 10000).toFixed(4);
-    console.log(username);
-    let password = Math.floor(Math.random() * 10000).toFixed(4);
+    let username = 'STU-' + Math.floor(Math.random() * 10000).toFixed(0);
+    let password = Math.floor(Math.random() * 10000).toFixed(0);
 
     let student = new Student({
         firstName: req.body.firstName,

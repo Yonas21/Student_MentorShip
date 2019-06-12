@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const blogSchema = mongoose.Schema({
     date: {
-        type: Date,
+        type: String,
         required: true
     },
     blog: {

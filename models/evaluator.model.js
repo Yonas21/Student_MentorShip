@@ -15,9 +15,13 @@ const evaluatorSchema = mongoose.Schema({
     },
     email: {
         type: String,
-
+        unique: true
     },
     address: {
+        type: String,
+        required: true
+    },
+    password: {
         type: String,
         required: true
     },
