@@ -17,7 +17,7 @@ exports.get_all_evaluators = (req, res, next) => {
             })
         });
 };
-exports.get_a_evaluator = (req, res, next) => {
+exports.get_an_evaluator = (req, res, next) => {
     let id = req.params.evaluatorId;
     Evaluator.findById(id)
         .select("phoneNo password email address firstName lastName")
