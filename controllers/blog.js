@@ -17,6 +17,7 @@ exports.get_all_blogs = (req, res, next) => {
             })
         });
 };
+
 exports.get_a_blog = (req, res, next) => {
     let id = req.params.blogId;
     Blog.findById(id)
@@ -43,7 +44,7 @@ exports.create_a_blog = (req, res, next) => {
     blog.save()
         .then(result => {
             res.status(201).json({
-                message: 'student registered successfully',
+                message: 'Blog saved successfully',
                 result: result
             })
         })
@@ -57,6 +58,7 @@ exports.create_a_blog = (req, res, next) => {
 
 exports.delete_a_blog = (req, res, next) => {
     let id = req.params.blogId;
+
     Blog.findByIdAndRemove(id)
         .exec()
         .then(result => {

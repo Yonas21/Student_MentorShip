@@ -36,8 +36,10 @@ exports.get_a_student = (req, res, next) => {
 };
 
 exports.register_student = (req, res, next) => {
-    let username = Math.random();
-    let password = 'STU' + Math.random();
+    let username = 'STU-' + Math.floor(Math.random() * 10000).toFixed(4);
+    console.log(username);
+    let password = Math.floor(Math.random() * 10000).toFixed(4);
+
     let student = new Student({
         firstName: req.body.firstName,
         lastName: req.body.lastName,

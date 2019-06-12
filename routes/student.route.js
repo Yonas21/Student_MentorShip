@@ -11,4 +11,6 @@ router.get('/:studentId', studentController.get_a_student);
 //register a student
 router.post('/', studentController.register_student);
 
-router.delete(':studentId', studentController.delete_a_student);
+router.delete('/:studentId', studentController.delete_a_student);
+
+module.exports = router;
