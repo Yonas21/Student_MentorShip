@@ -3,7 +3,6 @@ const Report = require('../models/report.model');
 
 exports.get_all_reports = (req, res, next) => {
     Report.find()
-        .select("report date")
         .exec()
         .then(reports => {
             res.status(200).json({
@@ -39,11 +38,14 @@ exports.get_a_report = (req, res, next) => {
 };
 
 exports.create_a_report = (req, res, next) => {
+
+    // console.log(req.files['image']);
+
     let report = new Report({
         numberOfStudents: req.body.numberOfStudents,
         dateOfReport: req.body.dateOfReport,
-        image: req.file.path,
-        video: req.file.path,
+        image: req.files['image'],
+        video: req.files['video'][0].path,
         text: req.body.text
     });
     report.save()

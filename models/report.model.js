@@ -10,11 +10,12 @@ const reportSchema = mongoose.Schema({
         required: true
     },
     image: {
-        type: String,
+        type: Array,
         required: true
     },
     video: {
         type: String,
+        required: true
     },
     text: {
         type: String,
