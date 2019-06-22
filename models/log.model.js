@@ -8,17 +8,17 @@ const logSchema = mongoose.Schema({
     evaluator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Evaluator',
-        required: true
+        required: false
     },
     report: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Report',
-        required: true
+        required: false
     },
     supervisor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Supervisor',
-        required: true
+        required: false
     }
 },{
     collection: 'log'

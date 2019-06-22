@@ -11,6 +11,9 @@ router.get('/:teacherId', teacherController.get_a_teacher);
 //register a student
 router.post('/', teacherController.register_teacher);
 
+// log into teacher's account
+router.post('/authenticate_teacher', teacherController.authenticate_teacher);
+
 router.delete('/:teacherId', teacherController.remove_teacher);
 
 module.exports = router;

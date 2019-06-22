@@ -1,5 +1,6 @@
 const Teacher = require('../models/teacher.model');
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 exports.get_all_teachers = (req, res, next) => {
     Teacher.find()
         .exec()
@@ -35,29 +36,41 @@ exports.get_a_teacher = (req, res, next) => {
         })
 };
 exports.register_teacher = (req, res, next) => {
-    let teacher = new Teacher({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        phoneNo: req.body.phoneNo,
-        email: req.body.email,
-        studyAt: req.body.studyAt,
-        field: req.body.field,
-        interest: req.body.interest
-    });
-
-    teacher.save()
-        .then(result => {
-            res.status(201).json({
-                message: 'Teacher registered successfully',
-                result: result
-            })
-        })
-        .catch(err => {
+    let password = Math.floor(Math.random() * 10000).toFixed(0);
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
+        if (err) {
             res.status(500).json({
-                message: 'unable to register teacher',
                 error: err
             })
-        })
+        } else {
+            let teacher = new Teacher({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                phoneNo: req.body.phoneNo,
+                email: req.body.email,
+                studyAt: req.body.studyAt,
+                field: req.body.field,
+                interest: req.body.interest,
+                password: hashedPassword
+            });
+
+            teacher.save()
+                .then(result => {
+                    res.status(201).json({
+                        message: 'Teacher registered successfully',
+                        result: result,
+                        password: password
+                    })
+                })
+                .catch(err => {
+                    res.status(500).json({
+                        message: 'unable to register teacher',
+                        error: err
+                    })
+                })
+        }
+    })
+
 };
 exports.remove_teacher = (req, res, next) => {
     let id = req.params.teacherId;
@@ -71,6 +84,59 @@ exports.remove_teacher = (req, res, next) => {
         .catch(err => {
             res.status(404).json({
                 message: `no teacher with id of ${id}`,
+                error: err
+            })
+        })
+};
+exports.authenticate_teacher = (req, res, next) => {
+    Teacher.find({ email: req.body.email })
+        .exec()
+        .then((user) => {
+            if (user.length < 1) {
+                return res.status(401).json({
+                    message: 'Authorization Failed'
+                });
+            } else {
+                console.log(user[0].password);
+                bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+
+                    if (err) {
+                        return res.status(401).json({
+                            message: 'Authorization Failed'
+                        });
+                        console.log(`${req.body.email} + ${req.body.password}`);
+                    }
+                    if (result) {
+                        const payload = {
+                            email: user[0].email,
+                            userId: user[0]._id,
+                            role: user[0].role,
+                            name: user[0].firstName
+                        };
+                        const token = jwt.sign(payload, process.env.JWT_SECRET ,
+                            {
+                                expiresIn: "12h"
+                            });
+                        //let decoded  = jwt_decoded(token);
+                        return res.status(200).json({
+                            message: 'Authorized',
+                            token: token,
+                            role: payload.role,
+                            email: payload.email
+                        });
+                    }
+
+
+                    res.status(401).json({
+                        message: 'Authorization Failed'
+                    });
+                    console.log(`${req.body.email} + ${req.body.password}`)
+                })
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
                 error: err
             })
         })

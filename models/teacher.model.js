@@ -15,7 +15,8 @@ const teacherSchema = mongoose.Schema({
         },
         email: {
             type: String,
-
+            required: true,
+            unique: true
         },
         studyAt: {
             type: String,
@@ -28,6 +29,14 @@ const teacherSchema = mongoose.Schema({
         interest: {
             type: String,
             required: true
+        },
+        password: {
+                type: String,
+                defaultValue: '0000'
+            },
+        role: {
+            type: String,
+            default: 'teacher'
         }
 },{
     collection: 'teacher'

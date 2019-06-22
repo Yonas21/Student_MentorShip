@@ -6,7 +6,7 @@ const reportSchema = mongoose.Schema({
         required: true
     },
     dateOfReport: {
-        type: Date,
+        type: String,
         required: true
     },
     image: {

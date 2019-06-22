@@ -19,12 +19,16 @@ const studentSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        default: '0000'
+        required: true
     },
     supervisor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'SuperVisor',
         required: false
+    },
+    role: {
+        type: String,
+        default: 'student'
     }
 },
     {

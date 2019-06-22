@@ -28,6 +28,10 @@ const evaluatorSchema = mongoose.Schema({
     teacher: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Teacher'
+    },
+    role: {
+        type: String,
+        default: 'evaluator'
     }
 },{
     collection: 'evaluator'

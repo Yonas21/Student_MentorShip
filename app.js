@@ -13,10 +13,15 @@ const blogRouter = require('./routes/blog.route');
 const teacherRouter = require('./routes/teacher.route');
 const evaluatorRouter = require('./routes/evaluator.route');
 const supervisorRouter = require('./routes/supervisor.route');
+const logRouter = require('./routes/log.route');
+const reportRouter = require('./routes/report.route');
 
 let app = express();
 
 mongoose.Promise = global.Promise;
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.DB, { useNewUrlParser: true }).then(
     () => {
       console.log("Database is connected");
@@ -42,7 +47,8 @@ app.use('/blog', blogRouter);
 app.use('/teacher', teacherRouter);
 app.use('/evaluator', evaluatorRouter);
 app.use('/supervisor', supervisorRouter);
-
+app.use('/log', logRouter);
+app.use('/report', reportRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
