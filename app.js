@@ -15,6 +15,7 @@ const evaluatorRouter = require('./routes/evaluator.route');
 const supervisorRouter = require('./routes/supervisor.route');
 const logRouter = require('./routes/log.route');
 const reportRouter = require('./routes/report.route');
+const commentRouter = require('./routes/comment.route');
 
 let app = express();
 
@@ -49,7 +50,7 @@ app.use('/evaluator', evaluatorRouter);
 app.use('/supervisor', supervisorRouter);
 app.use('/log', logRouter);
 app.use('/report', reportRouter);
-
+app.use('/comment', commentRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
