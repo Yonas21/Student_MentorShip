@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 
 exports.get_all_students = (req, res, next) => {
     Student.find()
-        .select("username password firstName lastName school role")
         .exec()
         .then(students => {
             res.status(200).json({
@@ -23,7 +22,6 @@ exports.get_all_students = (req, res, next) => {
 exports.get_a_student = (req, res, next) => {
     let id = req.params.studentId;
     Student.findById(id)
-        .select("username password firstName lastName school")
         .exec()
         .then(student => {
             res.status(200).json({
@@ -53,7 +51,8 @@ exports.register_student = (req, res, next) => {
                 lastName: req.body.lastName,
                 school: req.body.school,
                 username: username,
-                password: hashedPassword
+                password: hashedPassword,
+                supervisor: req.body.supervisor
             });
             student.save()
                 .then(result => {
@@ -144,4 +143,6 @@ exports.authenticate_student = (req, res, next) => {
             })
         })
 };
+
+
 

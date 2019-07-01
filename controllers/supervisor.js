@@ -1,10 +1,10 @@
 const Supervisor = require('../models/supervisor.model');
+const Student = require('../models/student.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.get_all_supervisors = (req, res, next) => {
     Supervisor.find()
-        .select("phoneNo password email address firstName lastName")
         .exec()
         .then(Supervisors => {
             res.status(200).json({
@@ -22,7 +22,6 @@ exports.get_all_supervisors = (req, res, next) => {
 exports.get_a_supervisor = (req, res, next) => {
     let id = req.params.supervisorId;
     Supervisor.findById(id)
-        .select("phoneNo password email address firstName lastName")
         .exec()
         .then(supervisor => {
             res.status(200).json({
@@ -138,6 +137,24 @@ exports.authenticate_supervisor = (req, res, next) => {
             console.log(err);
             res.status(500).json({
                 error: err
+            })
+        })
+};
+
+exports.get_student_from_a_supervisor = (req, res, next) => {
+    let supervisorId = req.params.supervisorId;
+    let result = null;
+    Student.find()
+        .exec()
+        .then(students => {
+            result = students.filter(student => {
+                return student.supervisor === supervisorId;
+            });
+            res.json(result);
+        })
+        .catch(err => {
+            res.status(404).json({
+                err
             })
         })
 };

@@ -22,9 +22,9 @@ const studentSchema = mongoose.Schema({
         required: true
     },
     supervisor: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'SuperVisor',
-        required: false
+        required: true
     },
     role: {
         type: String,
